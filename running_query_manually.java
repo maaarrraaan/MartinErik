@@ -6,9 +6,12 @@ public class running_query_manually {
 		
 		Querying q = new Querying();
 		String[] context = {""};
-		Carrier carrier = q.querying("Obama", context,"Person");
+		Carrier carrier = q.querying("Colorado", context,"Location");
 		
-		System.out.println(carrier);
+		//System.out.println(carrier);
+		for (Carrier c : q.getTopThree()){
+			System.out.println(c);
+		}
 		//System.out.println(carrier.returnRaw());
 		/*
 		for (Carrier c : q.getTopThree()){

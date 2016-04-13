@@ -17,7 +17,7 @@ import java.net.URLDecoder;
  *  The result will be written to a log file and summarized as number of questions, number of correct answers and number of partially correct
  *  answers. 
  */
-public class Testing {
+public class Testing1 {
 	public static void main(String[] args) throws IOException {
 	
 	    Querying q = new Querying();
@@ -46,7 +46,11 @@ public class Testing {
 						if (list_of_values[1].equals("Person")){
 							Carrier carrier = q.querying(list_of_values[0], list_of_values[2].split(";"), "Person");
 							
-							String answer = carrier.rename_http(carrier.getValue("dbo:Person").replaceAll("_", " ").toLowerCase());
+							String answer = ""+carrier.getID();
+							
+							if (!answer.equals("")){
+								answer = carrier.rename_http(answer.replaceAll("_", " ").toLowerCase());
+							}
 							
 							if (answer.equals(list_of_values[3].toLowerCase())){
 								correct_answer ++;
@@ -54,7 +58,7 @@ public class Testing {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("")){
+							}else if(answer.equals("null")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -80,7 +84,7 @@ public class Testing {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("")){
+							}else if(answer.equals("null")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -106,7 +110,7 @@ public class Testing {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("")){
+							}else if(answer.equals("null")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -124,7 +128,10 @@ public class Testing {
 							
 							Carrier carrier = q.querying(list_of_values[0], list_of_values[2].split(";"), "Organisation");
 							
-							String answer = carrier.rename_http(carrier.getValue("dbo:Organisation").replaceAll("_", " ").toLowerCase());
+							String answer = ""+carrier.getID();
+							if (!answer.equals("")){
+								answer = carrier.rename_http(answer.replaceAll("_", " ").toLowerCase());
+							}
 							
 							if (answer.equals(list_of_values[3].toLowerCase())){
 								correct_answer ++;
@@ -132,7 +139,7 @@ public class Testing {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("")){
+							}else if(answer.equals("null")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -158,7 +165,7 @@ public class Testing {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("")){
+							}else if(answer.equals("null")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{

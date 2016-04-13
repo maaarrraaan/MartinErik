@@ -43,18 +43,18 @@ Soros%%Person%%-%%George Soros
 Rausing%%Person%%-%%Hans Rausing
 Hawking%%Person%%-%%Stephen Hawking
 West%%Person%%-%%Kanye West
-Buffet%%Person%%-%%Warren Buffet
+Buffett%%Person%%-%%Warren Buffett
 Newton%%Person%%-%%Isaac Newton
 Warhol%%Person%%-%%Andy Warhol
 Blankfein%%Person%%-%%Lloyd Blankfein
 Bezos%%Person%%-%%Jeff Bezos
 Mayer%%Person%%-%%Marissa Mayer
-Benioff%%Person%%-%%Marc Benioff
+Benioff%%Person%%-%%David Benioff
 Hart%%Person%%-%%Joe Hart
 Patty Duke%%Person%%Oscar;Child star%%Patty Duke
 Pat McCrory%%Person%%Lesbian;Gay;Bisexual;Transgeneder%%Pat McCrory
 Sanders%%Person%%Senator%%Bernie Sanders
-Sigmundur%%Person%%Island%%Sigmundur Davíð Gunnlaugsson
+Sigmundur%%Person%%Iceland%%Sigmundur Davíð Gunnlaugsson
 Robert Iger%%Person%%Disney%%Bob Iger
 Morowitz%%Person%%Biophysicist;Enigmas%%Harold J. Morowitz
 Theresa May%%Person%%Deport%%Theresa May
@@ -75,29 +75,29 @@ Damon%%Person%%Actor%%Matt Damon
 Rand%%Person%%Author%%Ayn Rand
 Popper%%Person%%-%%Karl Popper
 ---Find the country a location is in
-Brooklyn%%Location%%-%%United States
-Hiroshima%%Location%%-%%Japan
-Aleppo%%Location%%Warplane;Rebels%%Syria
-Agdash%%Location%%-%%Azerbaijan
-Adelaide%%Location%%-%%Australia
-Ágios Nikólaos%%Location%%-%%Greece
-Akyab%%Location%%-%%Myanmar
-Amiens%%Location%%-%%France
-Aracaju%%Location%%-%%Brazil
-Arensburg%%Location%%-%%Estonia
-Chaniá%%Location%%-%%Greece
-Cibitoke%%Location%%-%%Burundi
-Colón%%Location%%-%%Panama
-Gomel%%Location%%-%%Belarus
-Oslo%%Location%%-%%Norway
-Rome%%Location%%-%%Italy
-Naples%%Location%%-%%Italy
-Ottawa%%Location%%-%%Canada
-San Jose%%Location%%-%%Costa Rica
-Kiruna%%Location%%-%%Sweden
-Moscow%%Location%%-%%Russia
-Berlin%%Location%%-%%Germany
-Zurich%%Location%%-%%Switzerland
-Colorado%%Location%%-%%United States
-Halland%%Location%%-%%Sweden
-Amsterdam%%Location%%-%%Netherlands
+Brooklyn%%Location_city%%-%%United States
+Hiroshima%%Location_city%%-%%Japan
+Aleppo%%Location_city%%Warplane;Rebels%%Syria
+Agdash%%Location_city%%-%%Azerbaijan
+Adelaide%%Location_city%%-%%Australia
+Ágios Nikólaos%%Location_city%%-%%Greece
+Akyab%%Location_city%%-%%Myanmar
+Amiens%%Location_city%%-%%France
+Aracaju%%Location_city%%-%%Brazil
+Arensburg%%Location_city%%-%%Estonia
+Chaniá%%Location_city%%-%%Greece
+Cibitoke%%Location_city%%-%%Burundi
+Colón%%Location_city%%-%%Panama
+Gomel%%Location_city%%-%%Belarus
+Oslo%%Location_city%%-%%Norway
+Rome%%Location_city%%-%%Italy
+Naples%%Location_city%%-%%Italy
+Ottawa%%Location_city%%-%%Canada
+San Jose%%Location_city%%-%%Costa Rica
+Kiruna%%Location_city%%-%%Sweden
+Moscow%%Location_city%%-%%Russia
+Berlin%%Location_city%%-%%Germany
+Zurich%%Location_city%%-%%Switzerland
+Colorado%%Location_city%%-%%United States
+Halland%%Location_city%%-%%Sweden
+Amsterdam%%Location_city%%-%%Netherlands

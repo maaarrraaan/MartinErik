@@ -13,7 +13,6 @@ public class Organisation extends KBQuery{
 			
 			carrier.setTopics(topics);
 			String entity = carrier.getID();
-			
 			String query = "SELECT ?abstract ?foundingDate ?foundationPlace ?assets ?foundedBy ?keyPerson ?industry ?parentCompany WHERE {"+
 				"OPTIONAL{"+entity+" dbo:foundingDate ?foundingDate.}"+
 				"OPTIONAL{"+entity+" dbo:abstract ?abstract."+

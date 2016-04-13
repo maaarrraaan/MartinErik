@@ -45,13 +45,13 @@ public class KBQuery {
 		Boolean redirect = true;
 		
 		indata = indata.replaceAll(" ", "_");
-		
+		/*
 		try {
 			indata = URLEncoder.encode(indata, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			System.out.println("Error on converting from indata from UTF-8 to URL. Keeps indata as: " + indata);
 		}
-		
+		*/
 		ArrayList<Carrier> carriers = new ArrayList<Carrier>();
 		
 		String redirects = "SELECT (count(?y) as ?count) ?"+entityType+" WHERE{"
@@ -60,7 +60,6 @@ public class KBQuery {
 				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 10";
 		
 		List<QuerySolution> possible_entities = runQuery(redirects);
-		
 		
 		if (possible_entities.isEmpty()){
 			redirect = false;
@@ -77,7 +76,7 @@ public class KBQuery {
 		/*//Loop to present all the results from count
 		for (QuerySolution q : possible_entities){
 			System.out.println(q.toString());
-		}*/
+		}*/	
 		
 		
 		if (possible_entities.isEmpty()){
@@ -132,9 +131,13 @@ public class KBQuery {
 		Carrier return_carrier;
 		ArrayList<String> list_of_results = new ArrayList<String>();
 		
-		for(QuerySolution query_result : runned_query){
-			String result = query_result.toString();
-			list_of_results.add(result.substring(2, result.length()-2));
+
+		
+		if(runned_query.size()!=1 && !runned_query.get(0).equals("")){
+			for(QuerySolution query_result : runned_query){
+				String result = query_result.toString();
+				list_of_results.add(result.substring(2, result.length()-2));
+			}
 		}
 		return_carrier = this.setResult(list_of_results, carrier);
 		
@@ -146,24 +149,25 @@ public class KBQuery {
 	 */
 	Carrier setResult(ArrayList<String> results, Carrier carrier){ 
 		
-		for (String result : results){
-			String[] topic_and_value = result.split(" \\) \\( ");
-			
-			for (String s : topic_and_value ){
-				String[] splitted_topic_and_value = s.split(" = ",2);
+		if (!results.isEmpty()){
+			for (String result : results){
+				String[] topic_and_value = result.split(" \\) \\( ");
 				
-				for (String topic : carrier.getTopics()){
-					if (topic.contains(splitted_topic_and_value[0].substring(1,splitted_topic_and_value[0].length()))){
-						splitted_topic_and_value[0] = topic;
+				for (String s : topic_and_value ){
+					String[] splitted_topic_and_value = s.split(" = ",2);
+					
+					for (String topic : carrier.getTopics()){
+						if (topic.contains(splitted_topic_and_value[0].substring(1,splitted_topic_and_value[0].length()))){
+							splitted_topic_and_value[0] = topic;
+						}
 					}
+					
+					carrier.setSubject(splitted_topic_and_value);
 				}
-				
-				carrier.setSubject(splitted_topic_and_value);
+			
 			}
-		
 		}
-		
-		double score = 0;
+		double score = 0.0;
 		
 		//Score base on number of appearances of context in abstract
 		for (String con : carrier.getContext()){
@@ -171,10 +175,10 @@ public class KBQuery {
 			score = score+num_of_occurence*2;
 	
 		}
-		
 		double count = Double.parseDouble(carrier.getCount());
 		//System.out.println(carrier.getValue("dbo:Person")+"Count value as double: " + count);
-		score = score + (4*count/100);
+		double count_scr = 4*count/1000;
+		score = score + count_scr;
 		//System.out.println(carrier.getValue("dbo:Person")+"Score value as double: " + score + "\n");
 		
 		carrier.setScore(score);

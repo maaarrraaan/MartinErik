@@ -44,22 +44,21 @@ public class Querying {
 		    final_results.sort(null);
 		    /*
 		    for (Carrier c: final_results){
-		    	System.out.println(c);
-		    }
-		    */
+		    	System.out.println(c.getID() + " " + c.getScore() + " count: " + c.getCount());
+		    }*/
+		    
 		    if (!final_results.isEmpty()){
 		    	if (!(final_results.size()==1)){
 		    		System.out.println("Score quota : " + final_results.get(1).getScore()/final_results.get(0).getScore());
 		    	}
 		    	if (final_results.size()==1){
 		    		carrier = final_results.get(0);
-		    	}else if (final_results.get(1).getScore()/final_results.get(0).getScore()<0.91){
+		    	}else if (final_results.get(1).getScore()/final_results.get(0).getScore()<0.8){
 		    		
 		    		
 		    		carrier = final_results.get(0);
 		    	}
 		    }
-		    
 		    
 		    return carrier;
 		}
