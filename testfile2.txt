@@ -1,0 +1,103 @@
+---Orgnaisations
+Tata Steel%%Organisation%%Steel%%Tata Steel
+Foxconn%%Organisation%%-%%Foxconn
+Tinder%%Organisation%%-%%Tinder_(app)
+Theranos%%Organisation%%-%%Theranos
+Netflix%%Organisation%%-%%Netflix
+Starbucks%%Organisation%%-%%Starbucks
+Airbnb%%Organisation%%-%%Airbnb
+Yahoo%%Organisation%%-%%Yahoo!
+Pfizer%%Organisation%%-%%Pfizer
+Subway%%Organisation%%-%%Subway_(restaurant)
+Zalando%%Organisation%%-%%Zalando
+Salesforce%%Organisation%%-%%Salesforce.com
+Kinnevik%%Organisation%%-%%Investment AB Kinnevik
+Snapchat%%Organisation%%-%%Snapchat
+Amazon%%Organisation%%-%%Amazon
+Investor%%Organisation%%-%%Investor AB
+Walmart%%Organisation%%-%%Walmart
+Tesla%%Organisation%%-%%Tesla Motors
+Alibaba%%Organisation%%-%%Alibaba Group
+Betterment%%Organisation%%Robo;adviser%%Betterment (investment service)
+Dell%%Organisation%%Technology;Data%%Dell
+BlackRock%%Organisation%%Acquired;Asset manager%%BlackRock
+Pfizer%%Organisation%%Merger%%Pfizer
+NHS%%Organisation%%Doctor%%National_Health_Service_(England)
+Gucci%%Organisation%%Thin;Model%%Gucci
+Albertsons%%Organisation%%-%%Albertsons
+Bechtel%%Organisation%%-%%Bechtel
+PWC%%Organisation%%-%%PricewaterhouseCoopers
+EY%%Organisation%%-%%Ernst %26 Young
+Fidelity%%Organisation%%-%%Fidelity Investments
+Fed%%Organisation%%Bank%%Federal Reserve System
+Fed%%Organisation%%Courier%%FedEx
+---Find the right person
+Pelé%%Person%%Football%%Pelé
+Parker%%Person%%Facebook%%Sean Parker
+Yellen%%Person%%-%%Janet Yellen
+Stenbeck%%Person%%-%%Jan Stenbeck
+Musk%%Person%%-%%Elon Musk
+Greenspan%%Person%%-%%Alan Greenspan
+Ek%%Person%%-%%Daniel Ek
+Soros%%Person%%-%%George Soros
+Rausing%%Person%%-%%Hans Rausing
+Hawking%%Person%%-%%Stephen Hawking
+West%%Person%%-%%Kanye West
+Buffet%%Person%%-%%Warren Buffet
+Newton%%Person%%-%%Isaac Newton
+Warhol%%Person%%-%%Andy Warhol
+Blankfein%%Person%%-%%Lloyd Blankfein
+Bezos%%Person%%-%%Jeff Bezos
+Mayer%%Person%%-%%Marissa Mayer
+Benioff%%Person%%-%%Marc Benioff
+Hart%%Person%%-%%Joe Hart
+Patty Duke%%Person%%Oscar;Child star%%Patty Duke
+Pat McCrory%%Person%%Lesbian;Gay;Bisexual;Transgeneder%%Pat McCrory
+Sanders%%Person%%Senator%%Bernie Sanders
+Sigmundur%%Person%%Island%%Sigmundur Davíð Gunnlaugsson
+Robert Iger%%Person%%Disney%%Bob Iger
+Morowitz%%Person%%Biophysicist;Enigmas%%Harold J. Morowitz
+Theresa May%%Person%%Deport%%Theresa May
+Cipriani%%Person%%Interception%%Danny Cipriani
+Abrams%%Person%%Cast%%J. J. Abrams
+Schultz%%Person%%Democratic%%Debbie Wasserman Schultz
+Osborne%%Person%%Tax%%George Osborne
+Cameron%%Person%%Prime Minister%%David Cameron
+Farage%%Person%%Leader;Tax%%Nigel Farage
+Biden%%Person%%-%%Joe Biden
+Wallström%%Person%%Minister%%Margot Wallström
+Åkesson%%Person%%Swedish;Democrats%%Jimmie Åkesson
+Löfven%%Person%%Sweden%%Stefan Löfven
+Mozart%%Person%%-%%Wolfgang Amadeus Mozart
+Torvalds%%Person%%Linux%%Linus Torvalds
+Ostrom%%Person%%Economic%%Elinor Ostrom
+Damon%%Person%%Actor%%Matt Damon
+Rand%%Person%%Author%%Ayn Rand
+Popper%%Person%%-%%Karl Popper
+---Find the country a location is in
+Brooklyn%%Location%%-%%United States
+Hiroshima%%Location%%-%%Japan
+Aleppo%%Location%%Warplane;Rebels%%Syria
+Agdash%%Location%%-%%Azerbaijan
+Adelaide%%Location%%-%%Australia
+Ágios Nikólaos%%Location%%-%%Greece
+Akyab%%Location%%-%%Myanmar
+Amiens%%Location%%-%%France
+Aracaju%%Location%%-%%Brazil
+Arensburg%%Location%%-%%Estonia
+Chaniá%%Location%%-%%Greece
+Cibitoke%%Location%%-%%Burundi
+Colón%%Location%%-%%Panama
+Gomel%%Location%%-%%Belarus
+Oslo%%Location%%-%%Norway
+Rome%%Location%%-%%Italy
+Naples%%Location%%-%%Italy
+Ottawa%%Location%%-%%Canada
+San Jose%%Location%%-%%Costa Rica
+Kiruna%%Location%%-%%Sweden
+Moscow%%Location%%-%%Russia
+Berlin%%Location%%-%%Germany
+Zurich%%Location%%-%%Switzerland
+Colorado%%Location%%-%%United States
+Halland%%Location%%-%%Sweden
+Amsterdam%%Location%%-%%Netherlands

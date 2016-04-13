@@ -24,7 +24,7 @@ public class Testing {
 	    
 			try {
 				PrintWriter writer = new PrintWriter("testingLog.txt", "UTF-8");
-				BufferedReader br = new BufferedReader(new FileReader("testfile1.txt"));
+				BufferedReader br = new BufferedReader(new FileReader("testfile2.txt"));
 				
 				String next_line = br.readLine();
 				
