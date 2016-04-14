@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -45,17 +46,12 @@ public class KBQuery {
 		Boolean redirect = true;
 		
 		indata = indata.replaceAll(" ", "_");
-		/*
-		try {
-			indata = URLEncoder.encode(indata, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Error on converting from indata from UTF-8 to URL. Keeps indata as: " + indata);
-		}
-		*/
+		
 		ArrayList<Carrier> carriers = new ArrayList<Carrier>();
 		
 		String redirects = "SELECT (count(?y) as ?count) ?"+entityType+" WHERE{"
-				+ "dbr:"+indata+" dbo:wikiPageRedirects ?"+entityType+"."
+				+ "dbr:"+indata+" dbo:wikiPageRedirects ?"+entityType+"."+
+				"?"+entityType+" rdf:type dbo:"+entityType+" ."
 				+ "?"+entityType+" ?y ?x."
 				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 10";
 		
@@ -128,19 +124,21 @@ public class KBQuery {
 	void resultFormatter(String query, Carrier carrier){
 	
 		List<QuerySolution> runned_query = runQuery(query);
+		
 		Carrier return_carrier;
 		ArrayList<String> list_of_results = new ArrayList<String>();
-		
-
-		
-		if(runned_query.size()!=1 && !runned_query.get(0).equals("")){
+		/*
+		System.out.println("Size: "+runned_query.size() + " Get:-"+ runned_query.get(0) + "-");
+		//!Strings.isNullOrEmpty(runned_query.get(0))runned_query.get(0) != null && !runned_query.get(0).equals("")
+		 * 
+		 */
+		if(!runned_query.get(0).toString().equals("")){
 			for(QuerySolution query_result : runned_query){
 				String result = query_result.toString();
 				list_of_results.add(result.substring(2, result.length()-2));
 			}
 		}
 		return_carrier = this.setResult(list_of_results, carrier);
-		
 		
 	}
 	/*
