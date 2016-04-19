@@ -13,23 +13,29 @@ import java.util.Map;
  */
 public class Carrier implements Comparable<Carrier>{
 	
-	private Map<String, String> subjects;
-	private String indata;
-	private String ID;
-	private String[] context;
-	private String count;
-	private String type;
-	private String[] topics;
+	private Map<String, String> subjects;			// A Map to contain topics and it's value.
+	private String indata;					// Stores the question.
+	private String type;					// Each question ask must contain a type, which is stored here.
+	private String[] context;				// Saves the context in which the indata is found, if any.
+	private String ID;					// The unique ID for each Carrier.
+	private String count;					// Stores a count value for each Carrier. Count is the sum of the number of objects.
+	private String[] topics;				// In the subjects map each value is of a certain topic. The topics are stored here
 	private Double score;
 	
+	/*
+	 * A constructor for empty Carriers used
+	 */
 	Carrier (){
 		subjects = new HashMap<String, String>();
 	}
-	
+	/*
+	 * Creates carriers when there is a sucsessful result. new_indata, new_context and new_type are data connected to the question
+	 * asked. new_count and new_ID are connected to each different possible entity returned. The ID is used to identify the different
+	 * Carriers. 
+	 */
 	Carrier (String new_indata, String[] new_context, String new_type, String new_count, String new_ID){
 		
 		subjects = new HashMap<String, String>();
-		
 		ID = new_ID;
 		indata = new_indata;
 		context = new_context;
@@ -37,6 +43,9 @@ public class Carrier implements Comparable<Carrier>{
 		type = new_type;
 	}
 	
+	/*
+	 * Function to get the ID of the carrier. Returns an empty string if there is no ID.
+	 */
 	String getID(){
 		if (ID == null){
 			ID = "";
@@ -44,40 +53,63 @@ public class Carrier implements Comparable<Carrier>{
 		return ID;
 	}
 	
+	/*
+	 * Function to get the Score of the carrier.
+	 */
 	Double getScore(){
 		return score;
 	}
-	
+	/*
+	 * Function to get the Type of the carrier.
+	 */
 	String getType(){
 		return type;
 	}
 	
+	/*
+	 * Function to get the Indata of the carrier.
+	 */
 	String getIndata(){
 		return indata;
 	}
 	
+	/*
+	 * Function to get the Count of the carrier.
+	 */
 	String getCount(){
 		return count;
 	}
 	
+	/*
+	 * Function to get the Context of the carrier.
+	 */
 	String[] getContext(){
 		return context;
 	}
 	
+	/*
+	 * Function to get the Topics of the carrier.
+	 */
 	String[] getTopics(){
 		return topics;
 	}
 	
+	/*
+	 * Function to set Score with a new score. Takes a double as input. 
+	 */
 	void setScore (Double new_score){
 		score = new_score;
 	}
 	
+	/*
+	 * Function to set Topics with a new list of topics. Takes a List of Strings as input. 
+	 */
 	void setTopics(String[] new_topics){
 		topics = new_topics;
 	}
 	
 	/*
-	 * Takes a tuple of strings with the first spot containing the key (or variable) and the second spot containing the value.
+	 * Takes a list of strings containing two strings with the first spot containing the key (or variable) and the second spot containing the value.
 	 * If the subject dosn't exist, it simply adds the tuple to the Map.
 	 * If the subject exists it checks if the value already have been. If the value have been added it does nothing. If there is a new value
 	 * the new value is added at the end with '!!split!!' as a splitter.
@@ -87,12 +119,7 @@ public class Carrier implements Comparable<Carrier>{
 		if (!subjects.containsKey(subject[0])){
 			subjects.put(subject[0], subject[1]);
 		}
-		//Jag tror inte att detta behövs, känns som att nedan else ändå täcker in detta
-		/*else if (!subjects.get(subject[0]).equals(subject[1])){
-				String old_value = subjects.get(subject[0]);
-				String new_value = old_value  + "!!split!!" +subject[1];
-				subjects.put(subject[0], new_value);
-		}*/
+		
 		else{
 			String[] values = subjects.get(subject[0]).split("!!split!!");
 			Boolean is_in = true;
@@ -234,14 +261,10 @@ public class Carrier implements Comparable<Carrier>{
 	}
 
 	@Override
+	/*
+	 * Redefined compareTo function to compare two carriers. The carrier with the higher score is ranked as higher. 
+	 */
 	public int compareTo(Carrier other_carrier) {
-		/*if (other_carrier.getScore()==this.getScore()){
-			return 0;
-		}else if (other_carrier.getScore()>this.getScore()){
-			return ;
-		}else{
-			return ;
-		}*/
 		return -Double.compare(this.getScore(), other_carrier.getScore());
 	}
 }
