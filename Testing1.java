@@ -58,7 +58,7 @@ public class Testing1 {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("null")){
+							}else if(answer.equals("")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -84,7 +84,7 @@ public class Testing1 {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("null")){
+							}else if(answer.equals("")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -110,7 +110,7 @@ public class Testing1 {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("null")){
+							}else if(answer.equals("")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -139,7 +139,7 @@ public class Testing1 {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("null")){
+							}else if(answer.equals("")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{
@@ -165,7 +165,7 @@ public class Testing1 {
 							}else if(answer.contains(list_of_values[3].toLowerCase())){
 								part_correct ++;
 								writer.println("PARTIALLY CORRECT");
-							}else if(answer.equals("null")){
+							}else if(answer.equals("")){
 								not_answered ++;
 								writer.println("NOT ANSWERED");
 							}else{

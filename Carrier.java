@@ -38,6 +38,9 @@ public class Carrier implements Comparable<Carrier>{
 	}
 	
 	String getID(){
+		if (ID == null){
+			ID = "";
+		}
 		return ID;
 	}
 	
