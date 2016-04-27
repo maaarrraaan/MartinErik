@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+        	<title>Knowledge base</title>
+        	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script>
+            $( document ).ready(function() {
+              $( ".Donald" ).mouseover(function() {
+                $("#result").html( "Donald info" );
+              })
+              $( ".Hillary" ).mouseover(function() {
+                $("#result").html( "Hillary info" );
+              })
+              $( ".Connecticut" ).mouseover(function() {
+                $("#result").html( "connecticut info" );
+              })
+              $( ".Delaware" ).mouseover(function() {
+                $("#result").html( "delaware info" );
+              })
+              $( ".Maryland" ).mouseover(function() {
+                $("#result").html( "maryland info" );
+              })
+              $( ".Pennsylvania" ).mouseover(function() {
+                $("#result").html( "pennsylvania info" );
+              })
+              $( ".Rhode_Island" ).mouseover(function() {
+                $("#result").html( "RI info" );
+              })
+              $( ".Bernie" ).mouseover(function() {
+                $("#result").html( "bernie info" );
+              })
+              $( ".Philadelphia" ).mouseover(function() {
+                $("#result").html( "philadelphia info" );
+              })
+            });
+          </script>
+        </head>
+        <body>
+        	<nav class='navbar navbar-default'>
+          <div class='container-fluid'>
+            <div class='navbar-header'>
+              <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1' aria-expanded='false'>
+                <span class='sr-only'>Toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+              </button>
+              <a class='navbar-brand' href='index.html'>Knowledge base</a>
+            </div>
+            <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+              <ul class='nav navbar-nav'>
+               <li ><a href='#'>Search </a></li>
+              <li class='active'><a href='#'>Texttagging<span class='sr-onl'></span></a></li> 
+              </ul>
+              <ul class='nav navbar-nav navbar-right'>
+                <li><a href='#'>Settings</a></li>
+              </ul>
+            </div>
+          </div>
+        	</nav>
+          <br><br><br>
+        	<div class="panel panel-default" style="margin-right: 25%;margin-left: 25%;" >
+            <div class="panel-body">
+              <h2><span class="Donald">Donald Trump</span> has won presidential primaries in all five US states that voted on Tuesday, while <span class="Hillary">Hillary Clinton</span> triumphed in four out of five.</h2><br>
+              <h4><span class="Donald">Mr Trump</span> called himself the Republican "presumptive nominee" after victories in <span class="Connecticut">Connecticut</span>, <span class="Delaware">Delaware</span>, <span class="Maryland">Maryland</span>, <span class="Pennsylvania">Pennsylvania</span> and <span class="Rhode_Island">Rhode Island</span>.
+              The results bring him closer to the number of delegates he needs before the party's national convention in July.For the Democrats, <span class="Hillary">Mrs Clinton</span> was denied a clean sweep by <span class="Bernie">Bernie Sanders</span>.<br><br>The <span class="Vermont">Vermont</span> senator won in <span class="Rhode_Island">Rhode Island</span> and vowed to fight to the end of the primaries process.Speaking at the <span class="Philadelphia">Philadelphia</span> Convention Center after securing the four other states, <span class="Hillary">Mrs Clinton</span> said her campaign was setting "bold, progressive goals" to improve lives in the US."We believe in the goodness of our people and the greatness of our nation," she said.</h4>
+            </div>
+          </div>
+          <div class="panel panel-default" style="margin-right: 25%;margin-left: 25%;" >
+            <div class="panel-body" id="result">
+            </div>
+          </div>
+        </body>
+        </html>
