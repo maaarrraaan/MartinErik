@@ -20,7 +20,7 @@ public class Carrier implements Comparable<Carrier>{
 	private String ID;					// The unique ID for each Carrier.
 	private String count;					// Stores a count value for each Carrier. Count is the sum of the number of objects.
 	private String[] topics;				// In the subjects map each value is of a certain topic. The topics are stored here
-	private Double score;
+	private Double score;					// A double to store the score of each Carrier.
 	
 	/*
 	 * A constructor for empty Carriers used
