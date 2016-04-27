@@ -16,11 +16,8 @@ public class Querying {
 	 * Depending solely on the type it chooses a template to call and executes the query.
 	 */
 	private ArrayList<Carrier> final_results;
-	
 	Carrier querying(String search_indata, String[] context, String type) {
-			System.getProperties().put( "proxySet", "true" );
-			System.getProperties().put( "proxyHost", "www-gw.foi.se" );
-			System.getProperties().put( "proxyPort", "8080" );
+			
 			KBQuery q = new KBQuery();
 		    Location l = new Location();
 		    Person p = new Person();
@@ -28,7 +25,7 @@ public class Querying {
 		    ArrayList<Carrier> filled_results = new ArrayList<Carrier>();
 		    
 		    Carrier carrier = new Carrier();
-		    ArrayList<Carrier> results = q.Count(search_indata, context,type);
+		    ArrayList<Carrier> results = q.topEntities(search_indata, context,type);
 		    if (results.isEmpty()){
 		    	System.out.println("Couldn't find anything on that searchterm.");
 		    }else if (type.equals("Person")){
@@ -42,10 +39,7 @@ public class Querying {
 			}
 		    final_results = filled_results;
 		    final_results.sort(null);
-		    /*
-		    for (Carrier c: final_results){
-		    	System.out.println(c.getID() + " " + c.getScore() + " count: " + c.getCount());
-		    }*/
+		    
 		    
 		    if (!final_results.isEmpty()){
 		    	if (!(final_results.size()==1)){
@@ -62,6 +56,9 @@ public class Querying {
 		    
 		    return carrier;
 		}
+	/*
+	 * Returns three most likely answers. 
+	 */
 	ArrayList<Carrier> getTopThree(){
 		ArrayList<Carrier> return_list = new ArrayList<Carrier>();
 		if(final_results.size()>=3){
@@ -71,4 +68,5 @@ public class Querying {
 			}
 		return return_list;
 	}
+	
 }

@@ -29,7 +29,7 @@ public class Location extends KBQuery{
 					+ "OPTIONAL{"+entity+" dbo:populationTotal ?populationTotal}"+
 					"}";
 			
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		}
 		
@@ -38,10 +38,7 @@ public class Location extends KBQuery{
 				updateCountry(carrier);
 			}
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
+		
 		return carriers;
 		}
 		
@@ -49,7 +46,7 @@ public class Location extends KBQuery{
 	//Template for asking for more information about a country. Returning the currency of the country, their government type, their total
 	//population and an abstract in English.
 	public ArrayList<Carrier> countryTemp(ArrayList<Carrier> carriers){
-		Carrier return_carrier = null ;
+
 		String[] topics = {"dbo:country", "dbo:abstract", "dbo:currency", "dbo:governmentType", "dbo:populationTotal"};
 		
 		for(Carrier carrier : carriers){
@@ -66,17 +63,17 @@ public class Location extends KBQuery{
 				"FILTER (lang(?abstract) = 'en')"+
 				"}";
 			
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
+		
 		return carriers;	
 		}
 	
-
+/* 
+ * Used in some cases when the country isn't added. If all the connected entities have the same nationality
+ * the country is added.
+ */
 	public void updateCountry(Carrier carrier){
 		
 		String query = "SELECT distinct ?country WHERE{"+

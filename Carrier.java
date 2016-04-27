@@ -2,6 +2,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * A carrier class used to carry the information from the knowledge base to the user. Contains a HashMap that stores all the information
@@ -218,12 +219,28 @@ public class Carrier implements Comparable<Carrier>{
 	}
 	
 	/*
+	 * Returns the map that stores all the values. 
+	 */
+	public Map<String,String> returnSubjects(){
+		return subjects;
+	}
+	
+	/*
+	 * Returns all the keys used to store values in the map.
+	 */
+	public Set<String>  returnKeys(){
+		return subjects.keySet();
+	}
+	
+	/*
 	 * A re-definition of the toString() method. Returns all the values stored in the map in a more user friendly way by removing information
 	 * related to the DBpedia setup. 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString(){
-		
+		if (ID == null) {
+			return "\n";
+		}
 		String return_str = type+ ": "+ rename_http(ID) + "\n";
 		
 		for (String key : subjects.keySet()){
