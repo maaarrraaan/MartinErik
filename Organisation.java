@@ -25,14 +25,10 @@ public class Organisation extends KBQuery{
 				"OPTIONAL{"+entity+" dbo:parentCompany ?parentCompany. }"+
 				"}";
 
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
 		return carriers;
 	}
 
