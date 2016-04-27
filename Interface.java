@@ -1,4 +1,7 @@
-
+/*
+	Simple graphical interface to be able to retrive information about an entity from the knowledge. 
+	Mainly used during development.
+*/
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
