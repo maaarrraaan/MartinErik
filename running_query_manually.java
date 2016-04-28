@@ -13,7 +13,7 @@ public class running_query_manually {
 		String[] context = {""};
 		
 		//Change the values in q.querying() to change the search. 
-		Carrier carrier = q.querying("Obama", context,"Person");
+		Carrier carrier = q.querying("US", context,"Location");
 		
 		System.out.println(carrier+"\nGet top three: \n");
 		for (Carrier c : q.getTopThree()){
@@ -30,7 +30,7 @@ public class running_query_manually {
 			Map<String,String> info = p.additionalInfo(carrier);
 			
 			for(String key : info.keySet()){
-				System.out.println(key + "    " + info.get(key));
+				System.out.println(key + "    " + carrier.rename_http(info.get(key)));
 			}
 		}
 		

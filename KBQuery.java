@@ -73,7 +73,7 @@ public class KBQuery {
 		/*//Loop to present all the results from count
 		for (QuerySolution q : possible_entities){
 			System.out.println(q.toString());
-		}*/	
+		}*/
 		
 		
 		/*
@@ -93,7 +93,7 @@ public class KBQuery {
 					carriers.add(carrier);
 				} 
 				//In some organisation the name is stored with an additional ending, adds the carrier if that is the case.
-				else if (entity_name.equals(indata.toLowerCase()) || entity_name.equals(indata.toLowerCase() + ", inc.") || entity_name.equals(indata.toLowerCase()+ " inc.")){
+				else if (entity_name.equals(indata.toLowerCase().replace("_", " ")) || entity_name.equals(indata.toLowerCase() + ", inc.") || entity_name.equals(indata.toLowerCase()+ " inc.")){
 					carriers = new ArrayList<Carrier>();
 					carriers.add(carrier);
 					break;

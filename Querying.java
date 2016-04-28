@@ -47,7 +47,7 @@ public class Querying {
 		    	}
 		    	if (final_results.size()==1){
 		    		carrier = final_results.get(0);
-		    	}else if (final_results.get(1).getScore()/final_results.get(0).getScore()<0.8){
+		    	}else if (final_results.get(1).getScore()/final_results.get(0).getScore()<0.85){
 		    		
 		    		
 		    		carrier = final_results.get(0);
