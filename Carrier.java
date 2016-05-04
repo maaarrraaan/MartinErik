@@ -1,5 +1,6 @@
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,11 +19,12 @@ public class Carrier implements Comparable<Carrier>{
 	private String indata;					// Stores the question.
 	private String type;					// Each question ask must contain a type, which is stored here.
 	private String[] context;				// Saves the context in which the indata is found, if any.
-	private String ID;					// The unique ID for each Carrier.
+	private String ID;						// The unique ID for each Carrier.
 	private String count;					// Stores a count value for each Carrier. Count is the sum of the number of objects.
 	private String[] topics;				// In the subjects map each value is of a certain topic. The topics are stored here
 	private Double score;					// A double to store the score of each Carrier.
-	
+	private ArrayList<Carrier> results;		//A list that stores the result of the returned carrier. Only added to the carrier with the highest score
+	private Map<String, String> add_info;	//Used to store additional info if that is wanted.
 	/*
 	 * A constructor for empty Carriers used
 	 */
@@ -94,7 +96,12 @@ public class Carrier implements Comparable<Carrier>{
 	String[] getTopics(){
 		return topics;
 	}
-	
+	/*
+	 * Function to get the results as a list of Carriers.
+	 */
+	ArrayList<Carrier> getResults(){
+		return results;
+	}
 	/*
 	 * Function to set Score with a new score. Takes a double as input. 
 	 */
@@ -109,6 +116,16 @@ public class Carrier implements Comparable<Carrier>{
 		topics = new_topics;
 	}
 	
+	/*
+	 * Function to set the results variable. Takes a ArrayList<Carrier> as input.
+	 */
+	void setResults(ArrayList<Carrier> new_results){
+		results = new_results;
+	}
+	
+	void setAdditionalInfo(Map<String, String> new_add_info){
+		add_info = new_add_info;
+	}
 	/*
 	 * Takes a list of strings containing two strings with the first spot containing the key (or variable) and the second spot containing the value.
 	 * If the subject dosn't exist, it simply adds the tuple to the Map.
@@ -277,6 +294,65 @@ public class Carrier implements Comparable<Carrier>{
 		return return_str;
 	}
 
+	/*
+	 * Returns the map that stores all the additional information. 
+	 */
+	public Map<String,String> returnAdditionalInfo(){
+		return add_info;
+	}
+	
+	/*
+	 * Returns all the keys used to store additional information in the map.
+	 */
+	public Set<String>  returnAdditionalInfosKeys(){
+		return add_info.keySet();
+	}
+	
+	/*
+	 * Returns the value of the additional info as a string. Some formating done due to the format of
+	 * the returns of the DBpedia query.
+	 */
+	public String AdditionalInfotoString(){
+		if (add_info.size() == 0) {
+			return "\n";
+		}
+		String return_str = "";
+		for (String key : add_info.keySet()){
+			String subject = add_info.get(key);
+			
+			//If the value is presented as a http-link its changed to a text format.
+			if (subject.startsWith("http:")){			
+				subject = "<" + subject + ">";
+			} 
+			if (subject.startsWith("<http:")){
+				subject = rename_http(subject);
+			}
+			
+			System.out.println("Key: " + key);
+			
+			if (key.startsWith("http:")){			
+				key = "<" + key + ">";
+			}
+			if (key.startsWith("<http:")){
+				key = rename_http(key);
+			}
+			key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
+			try {
+				subject = URLDecoder.decode(subject, "UTF-8");
+				key = URLDecoder.decode(key, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Couldn't decode the URL. Presenting result as URL instead of UTF-8");
+			} catch (IllegalArgumentException e){
+				System.out.println(e.getMessage());
+			}
+			return_str = return_str + key + ": " + subject + "\n";
+		}
+		
+		return return_str;
+	}
+
+	
+	
 	@Override
 	/*
 	 * Redefined compareTo function to compare two carriers. The carrier with the higher score is ranked as higher. 

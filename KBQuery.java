@@ -42,7 +42,7 @@ public class KBQuery {
 	 * is used. Otherwise filters out the top 50 entities that contains the indata in its ID. Also
 	 * counts the number of objects connected to each entity and saves it in the count field. 
 	 */
-	public ArrayList<Carrier> topEntities(String indata,String [] context,String entityType){ 
+	public ArrayList<Carrier> topEntities(String indata,String [] context,String entityType, int number_of_entities){ 
 		
 		Boolean redirect = true;
 		
@@ -54,7 +54,7 @@ public class KBQuery {
 				+ "dbr:"+indata+" dbo:wikiPageRedirects ?"+entityType+"."+
 				"?"+entityType+" rdf:type dbo:"+entityType+" ."
 				+ "?"+entityType+" ?y ?x."
-				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 10";
+				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT "+number_of_entities;
 		
 		List<QuerySolution> possible_entities = runQuery(redirects);
 		
@@ -65,7 +65,7 @@ public class KBQuery {
 					"?"+entityType+" rdf:type dbo:"+entityType+" ."+
 					"FILTER regex(?"+entityType+", \""+indata+"\", \"i\")"+
 					"?"+entityType+" ?y ?x."+
-					"} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 50";
+					"} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT "+number_of_entities;
 			
 			possible_entities = runQuery(count);
 		}
