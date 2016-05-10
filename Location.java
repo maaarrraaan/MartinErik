@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.jena.query.QuerySolution;
 
@@ -89,6 +91,34 @@ public class Location extends KBQuery{
 			carrier.setSubject(country_tuple);
 		}
 		
+	}
+	
+	public Map<String, String> additionalInfo(Carrier carrier){
+		Map<String, String> return_map = new HashMap<String, String>();
+		otherLocations(carrier, return_map);
+		return return_map;
+	}
+	
+	private void otherLocations(Carrier carrier, Map<String,String> return_map){
+		String query = "SELECT * WHERE{"+
+		carrier.getID()+" ?x ?y."+
+		"?y rdf:type dbo:Location"+
+		"}";
+		
+		List<QuerySolution> result= runQuery(query);
+		
+		for (QuerySolution q : result){
+			String[] values = q.toString().split(" \\) \\( ");
+			String key = values[1].split("x = ")[1];
+			key = key.substring(0, key.length()-2);
+			String value = values[0].substring(7, values[0].length());
+					
+			if (!return_map.containsKey(key)){
+				return_map.put(key, value);
+			} else {
+				return_map.put(key, return_map.get(key) + "!!split!!" + value);
+			}
+		}
 	}
 }
 

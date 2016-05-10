@@ -13,27 +13,14 @@ public class running_query_manually {
 		String[] context = {""};
 		
 		//Change the values in q.querying() to change the search. 
-		Carrier carrier = q.querying("US", context,"Location");
+		Carrier carrier = q.querying("Obama", context,"Person");
 		
-		System.out.println(carrier+"\nGet top three: \n");
-		for (Carrier c : q.getTopThree()){
-			System.out.println(c);
-		}
-		//System.out.println(carrier.returnRaw());
-		//new Interface();
+		System.out.println(carrier);
 		
+		//Returns related entities to the carrier. 
+		q.getAdditionalInfo(carrier);
 		
-		//If it is a person search and a person is returned call the additionalInfo() function.
-		Person p = new Person();
-	
-		if(!(carrier.getScore() == null && carrier.getType().equals("Person"))){
-			Map<String,String> info = p.additionalInfo(carrier);
-			
-			for(String key : info.keySet()){
-				System.out.println(key + "    " + carrier.rename_http(info.get(key)));
-			}
-		}
-		
+		System.out.println("Related entities:\n" + carrier.AdditionalInfotoString());
 	}
 
 }
