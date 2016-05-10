@@ -1,8 +1,13 @@
 package webapp;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -23,6 +28,7 @@ public class Carrier implements Comparable<Carrier>{
 	private String type;
 	private String[] topics;
 	private Double score;
+	private String thumbnail;
 	
 	Carrier (){
 		subjects = new HashMap<String, String>();
@@ -31,7 +37,7 @@ public class Carrier implements Comparable<Carrier>{
 	Carrier (String new_indata, String[] new_context, String new_type, String new_count, String new_ID){
 		
 		subjects = new HashMap<String, String>();
-		
+		thumbnail = "";
 		ID = new_ID;
 		indata = new_indata;
 		context = new_context;
@@ -135,6 +141,9 @@ public class Carrier implements Comparable<Carrier>{
 		return return_str;
 	}
 	
+	public String getThumbnail(){
+		return thumbnail;
+	}
 	/*
 	 * A function used to change a http-link to just presenting the value of the entity. For example:
 	 * Spain is return as a link to the DBpedia page about Spain <http://dbpedia.org/resource/Spain>. Instead of presenting this to the user,
@@ -200,7 +209,7 @@ public class Carrier implements Comparable<Carrier>{
 		
 		for (String key : subjects.keySet()){
 			String subject = subjects.get(key);
-			
+			System.out.println(key);
 			//If the value is presented as a http-link its changed to a text format.
 			if (subject.startsWith("http:")){			
 				subject = "<" + subject + ">";
@@ -219,6 +228,12 @@ public class Carrier implements Comparable<Carrier>{
 				subject = subject.substring(1, subject.length()-4);
 			}
 			
+			if (key.equals("?thumbnail")){
+				thumbnail = subjects.get(key);
+				thumbnail = thumbnail.split("<")[1];
+				thumbnail = thumbnail.split(">")[0];
+			}
+			
 			try {
 				subject = URLDecoder.decode(subject, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
@@ -226,7 +241,9 @@ public class Carrier implements Comparable<Carrier>{
 			} catch (IllegalArgumentException e){
 				System.out.println(e.getMessage());
 			}
-			return_str = return_str + key + ": " + subject + "\n";
+			if(!key.equals("?thumbnail")){
+				return_str = return_str+"<br>"+ key + ": " + subject;
+			}
 		}
 		
 		return return_str;

@@ -22,7 +22,7 @@ public class Person extends KBQuery{
 			String entity = carrier.getID();
 			
 			String query =
-				"SELECT ?abstract ?birthDate ?birthPlace ?occupation ?nationality ?deathDate WHERE {"+
+				"SELECT ?abstract ?birthDate ?birthPlace ?occupation ?nationality ?deathDate ?thumbnail WHERE {"+
 				"OPTIONAL{"+entity+" dbo:birthDate ?birthDate.}"+
 				"OPTIONAL{"+entity+" dbp:birthDate ?birthDate.}"+
 				"OPTIONAL{"+entity+" dbo:abstract ?abstract."+
@@ -32,7 +32,8 @@ public class Person extends KBQuery{
 				"OPTIONAL{"+entity+" dbo:deathDate ?deathDate.}"+
 				"OPTIONAL{"+entity+" dbp:deathDate ?deathDate.}"+
 				"OPTIONAL{"+entity+" dbo:nationality ?nationality.}"+
-				"OPTIONAL{"+entity+" dbo:occupation ?occupation}"
+				"OPTIONAL{"+entity+" dbo:occupation ?occupation}"+
+				"OPTIONAL{"+entity+" dbo:thumbnail ?thumbnail}"
 				+"}";
 			
 			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
