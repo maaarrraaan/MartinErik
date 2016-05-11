@@ -1,11 +1,11 @@
 package webapp;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -39,27 +39,23 @@ public class KBQuery {
 		return(results_of_query);
 	 }	
 	/*
-	 * Functions that counts number of links from the given entity. Returns a list of strings (each string are the values connected to one
-	 * entity). If the context is empty it only returns the result with the highest number of links, otherwise returns the top 10.
+	 * A function to get the the most likely entities and returns it as a list of Carriers. If indata raises a redirect, the redirect case
+	 * is used. Otherwise filters out the top 50 entities that contains the indata in its ID. Also
+	 * counts the number of objects connected to each entity and saves it in the count field. 
 	 */
-	public ArrayList<Carrier> Count(String indata,String [] context,String entityType){ 
+	public ArrayList<Carrier> topEntities(String indata,String [] context,String entityType, int number_of_entities){ 
 		
 		Boolean redirect = true;
 		
 		indata = indata.replaceAll(" ", "_");
-		/*
-		try {
-			indata = URLEncoder.encode(indata, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Error on converting from indata from UTF-8 to URL. Keeps indata as: " + indata);
-		}
-		*/
+		
 		ArrayList<Carrier> carriers = new ArrayList<Carrier>();
 		
 		String redirects = "SELECT (count(?y) as ?count) ?"+entityType+" WHERE{"
-				+ "dbr:"+indata+" dbo:wikiPageRedirects ?"+entityType+"."
+				+ "dbr:"+indata+" dbo:wikiPageRedirects ?"+entityType+"."+
+				"?"+entityType+" rdf:type dbo:"+entityType+" ."
 				+ "?"+entityType+" ?y ?x."
-				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 10";
+				+ "} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT "+number_of_entities;
 		
 		List<QuerySolution> possible_entities = runQuery(redirects);
 		
@@ -70,7 +66,7 @@ public class KBQuery {
 					"?"+entityType+" rdf:type dbo:"+entityType+" ."+
 					"FILTER regex(?"+entityType+", \""+indata+"\", \"i\")"+
 					"?"+entityType+" ?y ?x."+
-					"} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT 50";
+					"} GROUP BY (?"+entityType+") ORDER BY DESC (?count) LIMIT "+number_of_entities;
 			
 			possible_entities = runQuery(count);
 		}
@@ -78,12 +74,14 @@ public class KBQuery {
 		/*//Loop to present all the results from count
 		for (QuerySolution q : possible_entities){
 			System.out.println(q.toString());
-		}*/	
+		}*/
 		
 		
+		/*
+		 * Loops through the QuerySolutions and creates a carrier for each entity. 
+		 */
 		if (possible_entities.isEmpty()){
-		}else{													//If context exists then add all entities to list for later ranking in function highScore().
-			
+		}else{													
 			for(QuerySolution entity : possible_entities){
 				Carrier carrier = new Carrier(indata, context, "dbo:"+entityType, entity.get("?count").toString(), "<"+entity.get("?"+entityType).toString()+">");
 				
@@ -91,15 +89,23 @@ public class KBQuery {
 				String entity_name = carrier.rename_http(carrier.getID().toLowerCase());
 				String[] split_entity_name = entity_name.split(" ");
 				
-				if (redirect){
+				//If it's a redirect always add the carrier
+				if (redirect){							
 					carriers.add(carrier);
-				}else if (entity_name.equals(indata.toLowerCase()) || entity_name.equals(indata.toLowerCase() + ", inc.") || entity_name.equals(indata.toLowerCase()+ " inc.")){
+				} 
+				//In some organisation the name is stored with an additional ending, adds the carrier if that is the case.
+				else if (entity_name.equals(indata.toLowerCase().replace("_", " ")) || entity_name.equals(indata.toLowerCase() + ", inc.") || entity_name.equals(indata.toLowerCase()+ " inc.")){
 					carriers = new ArrayList<Carrier>();
 					carriers.add(carrier);
 					break;
-				}else if (indata.contains("_")){
+				}
+				//If indata contains an underscore the carriers is added.
+				else if (indata.contains("_")){
 					carriers.add(carrier);
-				}else{
+				}
+				//Otherwise the Carrier is added if the indata exactly matches a part of the entity name.
+				//This is to remove the cases where indata is a part of a longer name.
+				else{
 					for (String part_of_name : split_entity_name){
 						if (indata.toLowerCase().equals(part_of_name)){
 							carriers.add(carrier);
@@ -108,19 +114,10 @@ public class KBQuery {
 				}
 				
 			}
-			/*for (Carrier c: carriers){
-				System.out.println(c +"Score: " +  c.getCount());
-			}*/
 			
 		}
 		return carriers;
 	}
-	/*
-	 * A function that ranks entities according to score from bestResult(). Returns carrier with highest score.
-	 */
-	
-
-
 
 	/*
 	 *  A function that does some simple formating of the query result and assigns it to a carrier. Since the queries are executed with
@@ -130,26 +127,23 @@ public class KBQuery {
 	void resultFormatter(String query, Carrier carrier){
 	
 		List<QuerySolution> runned_query = runQuery(query);
-		Carrier return_carrier;
+		
 		ArrayList<String> list_of_results = new ArrayList<String>();
 		
-
-		
-		if(runned_query.size()!=1 && !runned_query.get(0).equals("")){
+		if(!runned_query.get(0).toString().equals("")){
 			for(QuerySolution query_result : runned_query){
 				String result = query_result.toString();
 				list_of_results.add(result.substring(2, result.length()-2));
 			}
 		}
-		return_carrier = this.setResult(list_of_results, carrier);
-		
+		this.setResult(list_of_results, carrier);
 		
 	}
 	/*
 	 * A function that first sets the values given by the list results and then assigns it a score based on the context. 
-	 * Returns a carrier with a score and all the values. If no values are in the results string an empty carrier is returned. 
+	 * Returns a carrier with a score and all the values.  
 	 */
-	Carrier setResult(ArrayList<String> results, Carrier carrier){ 
+	void setResult(ArrayList<String> results, Carrier carrier){ 
 		
 		if (!results.isEmpty()){
 			for (String result : results){
@@ -184,10 +178,6 @@ public class KBQuery {
 		//System.out.println(carrier.getValue("dbo:Person")+"Score value as double: " + score + "\n");
 		
 		carrier.setScore(score);
-		
-		return carrier;
-		
-		
 		
 	}
 }

@@ -1,5 +1,4 @@
 package webapp;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,24 +35,29 @@ public class Person extends KBQuery{
 				"OPTIONAL{"+entity+" dbo:thumbnail ?thumbnail}"
 				+"}";
 			
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query, carrier);
 			
 			
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);*/
+		
 		return carriers;
 		
 	}
 	
+	/*
+	 * A function to get additional information about an entity. Currently just otherPersons implemented.
+	 */
 	public Map<String, String> additionalInfo(Carrier carrier){
 		Map<String, String> return_map = new HashMap<String, String>();
 		otherPersons(carrier, return_map);
 		return return_map;
 	}
 	
+	/*
+	 * Queries the knowledge base for persons that are connected to the entity. Adds the connected persons
+	 * to the Map, along with the property connecting them.
+	 */
 	private void otherPersons(Carrier carrier, Map<String,String> return_map){
 		String query = "SELECT * WHERE{"+
 		carrier.getID()+" ?x ?y."+

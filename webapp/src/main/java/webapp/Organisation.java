@@ -1,6 +1,10 @@
 package webapp;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.jena.query.QuerySolution;
 
 //An extension of the general KBQuery class that holds the specific templates for when asking about an organisation of some sort.
 public class Organisation extends KBQuery{
@@ -15,7 +19,7 @@ public class Organisation extends KBQuery{
 			
 			carrier.setTopics(topics);
 			String entity = carrier.getID();
-			String query = "SELECT ?abstract ?foundingDate ?foundationPlace ?assets ?foundedBy ?keyPerson ?industry ?parentCompany WHERE {"+
+			String query = "SELECT ?abstract ?foundingDate ?foundationPlace ?assets ?foundedBy ?keyPerson ?industry ?parentCompany ?thumbnail WHERE {"+
 				"OPTIONAL{"+entity+" dbo:foundingDate ?foundingDate.}"+
 				"OPTIONAL{"+entity+" dbo:abstract ?abstract."+
 				"FILTER (lang(?abstract) = 'en')}"+
@@ -25,17 +29,41 @@ public class Organisation extends KBQuery{
 				"OPTIONAL{"+entity+" dbo:keyPerson ?keyPerson. }"+
 				"OPTIONAL{"+entity+" dbo:industry ?industry. }"+
 				"OPTIONAL{"+entity+" dbo:parentCompany ?parentCompany. }"+
+				"OPTIONAL{"+entity+" dbo:thumbnail ?thumbnail}"+
 				"}";
 
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
 		return carriers;
 	}
-
+	
+	public Map<String, String> additionalInfo(Carrier carrier){
+		Map<String, String> return_map = new HashMap<String, String>();
+		otherOrganisations(carrier, return_map);
+		return return_map;
+	}
+	
+	public void otherOrganisations(Carrier carrier, Map<String,String> return_map){
+		String query = "SELECT * WHERE{"+
+				carrier.getID()+" ?x ?y."+
+			"?y rdf:type dbo:Organisation"+
+			"}";
+		
+		List<QuerySolution> result= runQuery(query);
+		
+		for (QuerySolution q : result){
+			String[] values = q.toString().split(" \\) \\( ");
+			String key = values[1].split("x = ")[1];
+			key = key.substring(0, key.length()-2);
+			String value = values[0].substring(7, values[0].length());
+					
+			if (!return_map.containsKey(key)){
+				return_map.put(key, value);
+			} else {
+				return_map.put(key, return_map.get(key) + "!!split!!" + value);
+			}
+		}
+	}
 }

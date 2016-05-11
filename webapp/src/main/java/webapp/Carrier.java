@@ -1,14 +1,10 @@
 package webapp;
-
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * A carrier class used to carry the information from the knowledge base to the user. Contains a HashMap that stores all the information
@@ -20,69 +16,124 @@ import java.util.Map;
  */
 public class Carrier implements Comparable<Carrier>{
 	
-	private Map<String, String> subjects;
-	private String indata;
-	private String ID;
-	private String[] context;
-	private String count;
-	private String type;
-	private String[] topics;
-	private Double score;
+	private Map<String, String> subjects;			// A Map to contain topics and it's value.
+	private String indata;					// Stores the question.
+	private String type;					// Each question ask must contain a type, which is stored here.
+	private String[] context;				// Saves the context in which the indata is found, if any.
+	private String ID;						// The unique ID for each Carrier.
+	private String count;					// Stores a count value for each Carrier. Count is the sum of the number of objects.
+	private String[] topics;				// In the subjects map each value is of a certain topic. The topics are stored here
+	private Double score;					// A double to store the score of each Carrier.
+	private ArrayList<Carrier> results;		//A list that stores the result of the returned carrier. Only added to the carrier with the highest score
+	private Map<String, String> add_info;	//Used to store additional info if that is wanted.
 	private String thumbnail;
-	
+	/*
+	 * A constructor for empty Carriers used
+	 */
 	Carrier (){
 		subjects = new HashMap<String, String>();
 	}
-	
+	/*
+	 * Creates carriers when there is a sucsessful result. new_indata, new_context and new_type are data connected to the question
+	 * asked. new_count and new_ID are connected to each different possible entity returned. The ID is used to identify the different
+	 * Carriers. 
+	 */
 	Carrier (String new_indata, String[] new_context, String new_type, String new_count, String new_ID){
 		
 		subjects = new HashMap<String, String>();
-		thumbnail = "";
 		ID = new_ID;
+		thumbnail = "";
 		indata = new_indata;
 		context = new_context;
 		count = new_count.split("\\^\\^")[0];
 		type = new_type;
 	}
 	
+	/*
+	 * Function to get the ID of the carrier. Returns an empty string if there is no ID.
+	 */
 	String getID(){
+		if (ID == null){
+			ID = "";
+		}
 		return ID;
 	}
 	
+	/*
+	 * Function to get the Score of the carrier.
+	 */
 	Double getScore(){
 		return score;
 	}
-	
+	/*
+	 * Function to get the Type of the carrier.
+	 */
 	String getType(){
 		return type;
 	}
 	
+	/*
+	 * Function to get the Indata of the carrier.
+	 */
 	String getIndata(){
 		return indata;
 	}
 	
+	/*
+	 * Function to get the Count of the carrier.
+	 */
 	String getCount(){
 		return count;
 	}
 	
+	/*
+	 * Function to get the Context of the carrier.
+	 */
 	String[] getContext(){
 		return context;
 	}
 	
+	/*
+	 * Function to get the Topics of the carrier.
+	 */
 	String[] getTopics(){
 		return topics;
 	}
-	
+	/*
+	 * Function to get the results as a list of Carriers.
+	 */
+	ArrayList<Carrier> getResults(){
+		return results;
+	}
+	public String getThumbnail(){
+		return thumbnail;
+	}
+	/*
+	 * Function to set Score with a new score. Takes a double as input. 
+	 */
 	void setScore (Double new_score){
 		score = new_score;
 	}
 	
+	/*
+	 * Function to set Topics with a new list of topics. Takes a List of Strings as input. 
+	 */
 	void setTopics(String[] new_topics){
 		topics = new_topics;
 	}
 	
 	/*
-	 * Takes a tuple of strings with the first spot containing the key (or variable) and the second spot containing the value.
+	 * Function to set the results variable. Takes a ArrayList<Carrier> as input.
+	 */
+	void setResults(ArrayList<Carrier> new_results){
+		results = new_results;
+	}
+	
+	void setAdditionalInfo(Map<String, String> new_add_info){
+		add_info = new_add_info;
+	}
+	/*
+	 * Takes a list of strings containing two strings with the first spot containing the key (or variable) and the second spot containing the value.
 	 * If the subject dosn't exist, it simply adds the tuple to the Map.
 	 * If the subject exists it checks if the value already have been. If the value have been added it does nothing. If there is a new value
 	 * the new value is added at the end with '!!split!!' as a splitter.
@@ -92,12 +143,7 @@ public class Carrier implements Comparable<Carrier>{
 		if (!subjects.containsKey(subject[0])){
 			subjects.put(subject[0], subject[1]);
 		}
-		//Jag tror inte att detta behövs, känns som att nedan else ändå täcker in detta
-		/*else if (!subjects.get(subject[0]).equals(subject[1])){
-				String old_value = subjects.get(subject[0]);
-				String new_value = old_value  + "!!split!!" +subject[1];
-				subjects.put(subject[0], new_value);
-		}*/
+		
 		else{
 			String[] values = subjects.get(subject[0]).split("!!split!!");
 			Boolean is_in = true;
@@ -141,9 +187,6 @@ public class Carrier implements Comparable<Carrier>{
 		return return_str;
 	}
 	
-	public String getThumbnail(){
-		return thumbnail;
-	}
 	/*
 	 * A function used to change a http-link to just presenting the value of the entity. For example:
 	 * Spain is return as a link to the DBpedia page about Spain <http://dbpedia.org/resource/Spain>. Instead of presenting this to the user,
@@ -199,17 +242,33 @@ public class Carrier implements Comparable<Carrier>{
 	}
 	
 	/*
+	 * Returns the map that stores all the values. 
+	 */
+	public Map<String,String> returnSubjects(){
+		return subjects;
+	}
+	
+	/*
+	 * Returns all the keys used to store values in the map.
+	 */
+	public Set<String>  returnKeys(){
+		return subjects.keySet();
+	}
+	
+	/*
 	 * A re-definition of the toString() method. Returns all the values stored in the map in a more user friendly way by removing information
 	 * related to the DBpedia setup. 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString(){
-		
+		if (ID == null) {
+			return "\n";
+		}
 		String return_str = type+ ": "+ rename_http(ID) + "\n";
 		
 		for (String key : subjects.keySet()){
 			String subject = subjects.get(key);
-			System.out.println(key);
+			
 			//If the value is presented as a http-link its changed to a text format.
 			if (subject.startsWith("http:")){			
 				subject = "<" + subject + ">";
@@ -244,20 +303,75 @@ public class Carrier implements Comparable<Carrier>{
 			if(!key.equals("?thumbnail")){
 				return_str = return_str+"<br>"+ key + ": " + subject;
 			}
+			}
+		
+		return return_str;
+	}
+
+	/*
+	 * Returns the map that stores all the additional information. 
+	 */
+	public Map<String,String> returnAdditionalInfo(){
+		return add_info;
+	}
+	
+	/*
+	 * Returns all the keys used to store additional information in the map.
+	 */
+	public Set<String>  returnAdditionalInfosKeys(){
+		return add_info.keySet();
+	}
+	
+	/*
+	 * Returns the value of the additional info as a string. Some formating done due to the format of
+	 * the returns of the DBpedia query.
+	 */
+	public String AdditionalInfotoString(){
+		if (add_info.size() == 0) {
+			return "\n";
+		}
+		String return_str = "";
+		for (String key : add_info.keySet()){
+			String subject = add_info.get(key);
+			
+			//If the value is presented as a http-link its changed to a text format.
+			if (subject.startsWith("http:")){			
+				subject = "<" + subject + ">";
+			} 
+			if (subject.startsWith("<http:")){
+				subject = rename_http(subject);
+			}
+			
+			System.out.println("Key: " + key);
+			
+			if (key.startsWith("http:")){			
+				key = "<" + key + ">";
+			}
+			if (key.startsWith("<http:")){
+				key = rename_http(key);
+			}
+			key = key.substring(0, 1).toUpperCase() + key.substring(1, key.length());
+			try {
+				subject = URLDecoder.decode(subject, "UTF-8");
+				key = URLDecoder.decode(key, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Couldn't decode the URL. Presenting result as URL instead of UTF-8");
+			} catch (IllegalArgumentException e){
+				System.out.println(e.getMessage());
+			}
+			return_str = return_str + key + ": " + subject + "\n";
 		}
 		
 		return return_str;
 	}
 
+	
+	
 	@Override
+	/*
+	 * Redefined compareTo function to compare two carriers. The carrier with the higher score is ranked as higher. 
+	 */
 	public int compareTo(Carrier other_carrier) {
-		/*if (other_carrier.getScore()==this.getScore()){
-			return 0;
-		}else if (other_carrier.getScore()>this.getScore()){
-			return ;
-		}else{
-			return ;
-		}*/
 		return -Double.compare(this.getScore(), other_carrier.getScore());
 	}
 }

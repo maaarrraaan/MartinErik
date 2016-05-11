@@ -1,7 +1,8 @@
 package webapp;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.jena.query.QuerySolution;
 
@@ -20,7 +21,7 @@ public class Location extends KBQuery{
 			String entity = carrier.getID();
 			
 			String query = 
-					"SELECT ?abstract ?populationTotal ?country ?leaderName ?establishedDate ?areaLand WHERE {"
+					"SELECT ?abstract ?populationTotal ?country ?leaderName ?establishedDate ?areaLand ?thumbnail WHERE {"
 					+ "OPTIONAL{"+entity+" dbo:country ?country.}"+
 					"OPTIONAL{"+entity+" dbo:abstract ?abstract."+
 					"FILTER (lang(?abstract) = 'en')}" +
@@ -29,9 +30,10 @@ public class Location extends KBQuery{
 					+
 					"OPTIONAL{"+entity+" dbo:areaLand ?areaLand}"
 					+ "OPTIONAL{"+entity+" dbo:populationTotal ?populationTotal}"+
+					"OPTIONAL{"+entity+" dbo:thumbnail ?thumbnail}"+
 					"}";
 			
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		}
 		
@@ -40,10 +42,7 @@ public class Location extends KBQuery{
 				updateCountry(carrier);
 			}
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
+		
 		return carriers;
 		}
 		
@@ -51,7 +50,7 @@ public class Location extends KBQuery{
 	//Template for asking for more information about a country. Returning the currency of the country, their government type, their total
 	//population and an abstract in English.
 	public ArrayList<Carrier> countryTemp(ArrayList<Carrier> carriers){
-		Carrier return_carrier = null ;
+
 		String[] topics = {"dbo:country", "dbo:abstract", "dbo:currency", "dbo:governmentType", "dbo:populationTotal"};
 		
 		for(Carrier carrier : carriers){
@@ -68,17 +67,17 @@ public class Location extends KBQuery{
 				"FILTER (lang(?abstract) = 'en')"+
 				"}";
 			
-			//Runs the query and formats the results in to a Carrier which is added to a list of carriers.
+			//Runs the query and adds the results to the Carrier.
 			resultFormatter(query,carrier);
 		}
-		/*
-		//Returns the carrier with the highest score.
-		return_carrier = highScore(carriers,return_carrier,topics);
-		*/
+		
 		return carriers;	
 		}
 	
-
+/* 
+ * Used in some cases when the country isn't added. If all the connected entities have the same nationality
+ * the country is added.
+ */
 	public void updateCountry(Carrier carrier){
 		
 		String query = "SELECT distinct ?country WHERE{"+
@@ -94,6 +93,34 @@ public class Location extends KBQuery{
 			carrier.setSubject(country_tuple);
 		}
 		
+	}
+	
+	public Map<String, String> additionalInfo(Carrier carrier){
+		Map<String, String> return_map = new HashMap<String, String>();
+		otherLocations(carrier, return_map);
+		return return_map;
+	}
+	
+	private void otherLocations(Carrier carrier, Map<String,String> return_map){
+		String query = "SELECT * WHERE{"+
+		carrier.getID()+" ?x ?y."+
+		"?y rdf:type dbo:Location"+
+		"}";
+		
+		List<QuerySolution> result= runQuery(query);
+		
+		for (QuerySolution q : result){
+			String[] values = q.toString().split(" \\) \\( ");
+			String key = values[1].split("x = ")[1];
+			key = key.substring(0, key.length()-2);
+			String value = values[0].substring(7, values[0].length());
+					
+			if (!return_map.containsKey(key)){
+				return_map.put(key, value);
+			} else {
+				return_map.put(key, return_map.get(key) + "!!split!!" + value);
+			}
+		}
 	}
 }
 
