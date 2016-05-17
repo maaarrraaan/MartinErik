@@ -14,7 +14,7 @@ public class Main {
         "<html>"+
         "<head>"+
         	"<title>Knowledge base</title>"+
-        	"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css'>"+
+        	"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/journal/bootstrap.min.css'>"+
         	"<script type='text/javascript' src='jquery-1.12.3.min.js'></script>"+
         	"<script type='text/javascript' src='jquery.js'></script>"+
         	"<script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>"+
@@ -98,7 +98,7 @@ public class Main {
         "<html>"+
         "<head>"+
         	"<title>Knowledge base</title>"+
-        	"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css'>"+
+        	"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/journal/bootstrap.min.css'>"+
         	"<script type='text/javascript' src='jquery-1.12.3.min.js'></script>"+
         	"<script type='text/javascript' src='jquery.js'></script>"+
         	//"<script type='text/javascript' src='Scripts/bootstrap.min.js'></script>"+
