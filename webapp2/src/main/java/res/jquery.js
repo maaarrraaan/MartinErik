@@ -1,31 +1,15 @@
 $(document).ready(function() {
-	  $(".dropdown-menu li a").click(function(){
-
-  		$(this).parents(".btn-group").find('.selection').text($(this).text());
-  		$(this).parents(".btn-group").find('.selection').val($(this).text());
-
-	});
       $("#searchbutton").click(function(){
-      		
     		$img = "<img src='ajax-loader.gif' /><br><br>"
     		$("#result").html($img);
             $indata = document.getElementById("search").value;
             $context = document.getElementById("context").value;
-            $type = document.getElementById("sel").innerText;
-           	
-            $.post("search", {indata:$indata,context:$context,type:$type}, function(data) {
+            $.post("search", {indata:$indata,context:$context}, function(data) {
             	
             	var r = data.split("|||")
             	var t = r[1]
-            	if(t!="null"){
-            		var image = "<img src='"+t+"' /><br>";
-	            	$("#result").html(image+r[0]);
-	            	
-				}else{
-					var image1 = "<span class='glyphicon glyphicon-thumbs-down' aria-hidden='true'></span>";
-	            	$("#result").html(image1+r[0]);
-				}
-            	
+            	var image = "<img src='"+t+"' /><br>"
+                $("#result").html(r[1]+r[0]);
             })
         })
      $( ".Donald" ).click(function() {

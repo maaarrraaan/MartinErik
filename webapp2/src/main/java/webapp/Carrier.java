@@ -262,9 +262,9 @@ public class Carrier implements Comparable<Carrier>{
 	 */
 	public String toString(){
 		if (ID == null) {
-			return "<h2>no results on that search term, please try again</h2>";
+			return "\n";
 		}
-		String return_str = "<h1>"+rename_http(ID) + "</h1>\n";
+		String return_str = type+ ": "+ rename_http(ID) + "\n";
 		
 		for (String key : subjects.keySet()){
 			String subject = subjects.get(key);
@@ -301,12 +301,7 @@ public class Carrier implements Comparable<Carrier>{
 				System.out.println(e.getMessage());
 			}
 			if(!key.equals("?thumbnail")){
-				if(key.equals("dbo:abstract")){
-					return_str = return_str+"<h5>"+subject+"</h5>";
-				}
-				else{	
-					return_str = return_str+"<h4>"+key.substring(4).toLowerCase()  + ": " + subject+"</h4>";
-				}
+				return_str = return_str+"<br>"+ key + ": " + subject;
 			}
 			}
 		
@@ -337,7 +332,6 @@ public class Carrier implements Comparable<Carrier>{
 		}
 		String return_str = "";
 		for (String key : add_info.keySet()){
-			
 			String subject = add_info.get(key);
 			
 			//If the value is presented as a http-link its changed to a text format.
